@@ -1,14 +1,18 @@
-# go-poc-day-1-worker-pool
-
-# Day 1 - Worker Pool in Go
+# Go Worker Pool System
 
 ## Features
-- Concurrent workers using goroutines
-- Task queue using channels
-- Context-based cancellation
-- Graceful shutdown
+- Concurrent task processing using goroutines
+- Worker pool pattern
+- Retry mechanism with backoff
+- Config-driven system (JSON + CLI args)
+- Graceful shutdown using context
+
+## Tech
+- Go concurrency (goroutines, channels)
+- Context cancellation
+- JSON config
 
 ## Learnings
-- Goroutines vs threads
-- Channels for communication
-- Worker pool design pattern
+- Avoid goroutine leaks
+- Design retry strategies
+- Build scalable worker systems

@@ -12,7 +12,7 @@ type Worker struct {
 	ID int `json:"id"`
 }
 
-func (w Worker) Start(ctx context.Context, tasks <-chan task.Task, wg *sync.WaitGroup) {
+func (w Worker) Start(ctx context.Context, tasks <-chan task.Task, wg *sync.WaitGroup, retry int) {
 	defer wg.Done()
 	for {
 		select {
@@ -26,6 +26,10 @@ func (w Worker) Start(ctx context.Context, tasks <-chan task.Task, wg *sync.Wait
 			}
 			fmt.Println("Worker", w.ID, "processing task", t.ID)
 			done,result:= t.Process()
+			for i:=0;!done && i<retry;i++{
+				fmt.Println("Worker", w.ID, "retrying task", t.ID, "Attempt:", i+1)
+				done,result = t.Process()
+			}
 			if done {
 				fmt.Println("Worker", w.ID, "completed task", t.ID, "Result:", result)
 			}else{
